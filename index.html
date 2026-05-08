@@ -61,10 +61,84 @@
                     </div>
                 </div>
             </div>
-        </div>       
+        </div>  
+        <div class="m3-card audio-player">
+  <div class="player-header">
+    <span class="chip">Material Web Player Lite</span>
+    <h3 class="track-title">Title: Reflection | Actor: Chikoi The Maid</h3>
+  </div>
+  
+  <div class="player-controls">
+    <button id="playBtn" class="play-btn" aria-label="Воспроизвести / Пауза">▶</button>
+    <div class="progress-container">
+      <span id="currentTime">0:00</span>
+      <div class="progress-bar" id="progressBar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <span id="duration">0:00</span>
+    </div>
+  </div>
+
+  <audio id="audioPlayer" src="misc/file.mp3" preload="metadata"></audio>
+</div>     
         <div class="text-center mt-8 opacity-50 text-xs uppercase tracking-tighter">
            Katsuro Desing futured (Google)Material Design 3 • 2026
         </div>
     </div>
 </body>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const audio = document.getElementById('audioPlayer');
+  const playBtn = document.getElementById('playBtn');
+  const progressFill = document.getElementById('progressFill');
+  const currentTimeEl = document.getElementById('currentTime');
+  const durationEl = document.getElementById('duration');
+  const progressBar = document.getElementById('progressBar');
+
+  const formatTime = (s) => {
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return `${m}:${sec.toString().padStart(2, '0')}`;
+  };
+
+  playBtn.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play();
+      playBtn.textContent = '⏸';
+    } else {
+      audio.pause();
+      playBtn.textContent = '▶';
+    }
+  });
+
+  audio.addEventListener('timeupdate', () => {
+    if (audio.duration) {
+      const pct = (audio.currentTime / audio.duration) * 100;
+      progressFill.style.width = `${pct}%`;
+      currentTimeEl.textContent = formatTime(audio.currentTime);
+    }
+  });
+
+  audio.addEventListener('loadedmetadata', () => {
+    durationEl.textContent = formatTime(audio.duration);
+  });
+
+  progressBar.addEventListener('click', (e) => {
+    if (!audio.duration) return;
+    const rect = progressBar.getBoundingClientRect();
+    const pos = (e.clientX - rect.left) / rect.width;
+    audio.currentTime = pos * audio.duration;
+  });
+
+  audio.addEventListener('ended', () => {
+    playBtn.textContent = '▶';
+    progressFill.style.width = '0%';
+  });
+
+  audio.addEventListener('error', () => {
+    playBtn.textContent = '⚠️';
+    currentTimeEl.textContent = 'Ошибка загрузки';
+  });
+});
+</script>
 </html>
