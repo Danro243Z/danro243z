@@ -70,4 +70,87 @@
         .link-button:hover {
             opacity: 0.9;
         }
+
+        /* Аудио-плеер в стиле Material You 3 */
+.audio-player {
+  max-width: 420px;
+  width: 100%;
+  margin: 24px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.player-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.track-title {
+  margin: 8px 0 0;
+  color: var(--md-sys-color-on-surface);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.player-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.play-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.play-btn:hover { opacity: 0.85; transform: scale(1.05); }
+.play-btn:active { transform: scale(0.95); }
+
+.progress-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--md-sys-color-on-surface-variant);
+  font-family: 'Playfair Display', monospace;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 6px;
+  background-color: var(--md-sys-color-outline);
+  border-radius: 3px;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background-color: var(--md-sys-color-primary);
+  border-radius: 3px;
+  transition: width 0.1s linear;
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 480px) {
+  .player-controls { flex-direction: column; align-items: stretch; }
+  .play-btn { margin: 0 auto 8px; }
+  .progress-container { width: 100%; }
+}
+
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Saira+Stencil:ital,wght@0,100..900;1,100..900&display=swap');
